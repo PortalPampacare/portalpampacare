@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +23,7 @@ public class Usuario {
     private Integer id;
     @Column(name = "nome")
     private String nome;
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
     @Column(name = "profissao")
     private String profissao;
@@ -33,4 +31,6 @@ public class Usuario {
     private String instituicao;
     @Column(name = "areaPesquisa")
     private String areaPesquisa;
+    @Column(name = "funcao")
+    private String funcao;
 }
