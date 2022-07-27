@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import javax.validation.Valid;
+import com.portal.dto.LoginUserDTO;
+import com.portal.entity.Login;
 import com.portal.entity.Usuario;
 import com.portal.service.UserService;
 
@@ -21,13 +23,13 @@ public class UserController {
   private UserService service;
 
   @PostMapping("/inserir")
-  public void addUser(@RequestBody Usuario user) {
-    service.inserirUsuario(user);
+  public void addUser(@RequestBody LoginUserDTO user) {
+   service.inserirUsuario(user);
   }
 
   @GetMapping("/procurar")
-  public Usuario searchUser(@Valid @RequestBody Usuario user) {
-    return service.procurarUsuario(user);
+  public Usuario searchUser(@Valid @RequestBody String email) {
+    return service.procurarEmail(email);
   }
 
   @GetMapping("/listar")
