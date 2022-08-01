@@ -1,7 +1,6 @@
 package com.portal.configuration;
 
 import org.springframework.security.core.userdetails.UserDetails;
-
 import com.portal.entity.Login;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

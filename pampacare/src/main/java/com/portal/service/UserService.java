@@ -30,29 +30,32 @@ public class UserService {
 
     public ResponseEntity<String> inserirUsuario(LoginUserDTO dto) {
         try {
-            Login l = (Login)converterDtoToEntity(dto, Login.class);
-            Usuario usr = (Usuario)converterDtoToEntity(dto, Usuario.class);
-            passEncoder = new BCryptPasswordEncoder();
-            l.setPassword(this.passEncoder.encode(l.getPassword()));
-            l.setUsr(usr);
+            Usuario usr = (Usuario) converterDtoToEntity(dto, Usuario.class);
             userRepository.save(usr);
-            loginRepository.save(l);
+            loginRepository.save(createLogin(dto, usr));
             return new ResponseEntity<String>("Cadastrado com sucesso", HttpStatus.OK);
         } catch (Error e) {
             return new ResponseEntity<String>("Erro ao realizar o cadastro", HttpStatus.BAD_REQUEST);
         }
     }
 
-    public List<Usuario> listarUsuario() {
+    public Login createLogin(LoginUserDTO dto, Usuario usr) {
+        Login l = (Login) converterDtoToEntity(dto, Login.class);
+        passEncoder = new BCryptPasswordEncoder();
+        l.setUser(usr);
+        l.setPassword(this.passEncoder.encode(l.getPassword()));
+        return l;
+    }
+
+    public List<Usuario> listAllUsers() {
         return userRepository.findAll();
     }
 
-    public Usuario procurarEmail(String email) {
-        System.out.println(email);
+    public Usuario findByUserEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    public void deletarUsuario(Usuario usr) {
+    public void deleteUsers(Usuario usr) {
         userRepository.delete(usr);
     }
 
@@ -60,12 +63,7 @@ public class UserService {
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
         Object obj = modelMapper.map(dto, name);
-        if( obj instanceof Usuario){
-        return (Usuario) obj;}
-        else if( obj instanceof Login){
-        return (Login) obj;
-        }
-        System.out.println("aqui foi modificado "+ obj);
-    return obj;
+        System.out.println("aqui foi modificado " + obj);
+        return obj;
     }
 }

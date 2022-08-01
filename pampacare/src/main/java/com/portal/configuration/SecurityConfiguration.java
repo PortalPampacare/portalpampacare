@@ -3,41 +3,36 @@ package com.portal.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
+
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
+  
   @Autowired
-  private UserDetailsService userDetailsService;
+	private JwtTokenProvider tokenProvider;
 
+  @Bean
+  @Override
+  public AuthenticationManager authenticationManagerBean() throws Exception{
+  return super.authenticationManagerBean(); 
+  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http.csrf().disable().authorizeRequests()
-    .antMatchers("/")
-    .permitAll()
-    .antMatchers("/portal/**")
-    .authenticated()
-    .anyRequest()
-    .authenticated()
-    .and()
-    .httpBasic();
+		http.cors();
+		http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.authorizeRequests().antMatchers("/portal/*").permitAll().anyRequest().authenticated();
+		http.apply(new JwtConfiguration(tokenProvider));
   }
 
-  @Bean
-  AuthenticationProvider authenticationProvider() {
-      DaoAuthenticationProvider provider
-               = new DaoAuthenticationProvider();
-      provider.setUserDetailsService(userDetailsService);
-      provider.setPasswordEncoder(new BCryptPasswordEncoder());
-      return  provider;
-  }
 }

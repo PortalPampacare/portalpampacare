@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import javax.validation.Valid;
 import com.portal.dto.LoginUserDTO;
-import com.portal.entity.Login;
 import com.portal.entity.Usuario;
 import com.portal.service.UserService;
 
@@ -29,16 +28,16 @@ public class UserController {
 
   @GetMapping("/procurar")
   public Usuario searchUser(@Valid @RequestBody String email) {
-    return service.procurarEmail(email);
+    return service.findByUserEmail(email);
   }
 
   @GetMapping("/listar")
   public List<Usuario> listUser() {
-    return service.listarUsuario();
+    return service.listAllUsers();
   }
 
   @PostMapping("/excluir")
   public void excluirUser(@RequestBody Usuario user) {
-    service.deletarUsuario(user);
+    service.deleteUsers(user);
   }
 }

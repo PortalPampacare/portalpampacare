@@ -17,8 +17,8 @@
 #     enabled: false
 #   datasource:
 #     url: jdbc:postgresql://localhost:5432/portal_pampacare?useTimezone=true&serverTimezone=UTC
-#     username: root
-#     password: sqlw22pass@w@rdç
+#     username: postgres
+#     password: postgres
 
 # eureka:
 #   instance:
