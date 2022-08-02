@@ -33,7 +33,7 @@ public class UserService {
             Usuario usr = (Usuario) converterDtoToEntity(dto, Usuario.class);
             userRepository.save(usr);
             loginRepository.save(createLogin(dto, usr));
-            return new ResponseEntity<String>("Cadastrado com sucesso", HttpStatus.OK);
+            return new ResponseEntity<String>("Cadastrado com sucesso!", HttpStatus.OK);
         } catch (Error e) {
             return new ResponseEntity<String>("Erro ao realizar o cadastro", HttpStatus.BAD_REQUEST);
         }
@@ -45,6 +45,16 @@ public class UserService {
         l.setUser(usr);
         l.setPassword(this.passEncoder.encode(l.getPassword()));
         return l;
+    }
+
+    public ResponseEntity<String> updateUserInfo(Usuario usr) {
+        try{
+            Usuario usuario = usr;
+            userRepository.save(usuario);
+            return new ResponseEntity<String>("Cadastro atualizado com sucesso!", HttpStatus.OK);
+        }catch(Error e){
+            return new ResponseEntity<String>("Erro ao realizar a atualização do cadastro", HttpStatus.BAD_REQUEST);
+        }
     }
 
     public List<Usuario> listAllUsers() {
