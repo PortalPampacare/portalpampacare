@@ -11,8 +11,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import org.springframework.web.bind.annotation.RestController;
 
-@SpringBootApplication
-@ComponentScan({"com.portal.controller","com.portal.service","com.portal.configuration"})
+@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+@ComponentScan({"com.portal.controller","com.portal.service"})
 @EntityScan("com.portal.entity")
 @EnableJpaRepositories("com.portal.repository")
 @RestController
