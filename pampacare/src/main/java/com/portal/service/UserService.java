@@ -67,7 +67,8 @@ public class UserService {
     }
 
     public void deleteUsers(Usuario usr) {
-        userRepository.delete(usr);
+        Login log = loginRepository.findByEmail(usr.getEmail());
+        loginRepository.delete(log);
     }
 
     private Object converterDtoToEntity(LoginUserDTO dto, Class name) {
