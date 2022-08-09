@@ -43,6 +43,7 @@ public class UserService {
         Login l = (Login) converterDtoToEntity(dto, Login.class);
         passEncoder = new BCryptPasswordEncoder();
         l.setUser(usr);
+        l.setRole(usr.getFuncao());
         l.setPassword(this.passEncoder.encode(l.getPassword()));
         return l;
     }
