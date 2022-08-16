@@ -15,7 +15,7 @@ import com.portal.entity.Usuario;
 import com.portal.service.UserService;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins="http://localhost:3000")
 @RequestMapping("/portal")
 public class UserController {
 
@@ -33,7 +33,7 @@ public class UserController {
   }
   
   @PostMapping("/editar/usuario")
-  public void updateUser(Usuario user){
+  public void updateUser(@RequestBody LoginUserDTO user){
     service.updateUserInfo(user);
   }
 

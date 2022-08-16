@@ -2,6 +2,7 @@ package com.portal.service;
 
 import java.util.List;
 
+import org.apache.catalina.User;
 import org.aspectj.weaver.ast.Instanceof;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -48,10 +49,13 @@ public class UserService {
         return l;
     }
 
-    public ResponseEntity<String> updateUserInfo(Usuario usr) {
+    public ResponseEntity<String> updateUserInfo(LoginUserDTO user) {
         try{
-            Usuario usuario = usr;
+            // System.out.println();
+            Login log = (Login) converterDtoToEntity(user, Login.class);
+            Usuario usuario = (Usuario) converterDtoToEntity(user, Usuario.class);
             userRepository.save(usuario);
+            loginRepository.save(log);
             return new ResponseEntity<String>("Cadastro atualizado com sucesso!", HttpStatus.OK);
         }catch(Error e){
             return new ResponseEntity<String>("Erro ao realizar a atualização do cadastro", HttpStatus.BAD_REQUEST);
@@ -69,6 +73,8 @@ public class UserService {
     public void deleteUsers(Usuario usr) {
         Login log = loginRepository.findByEmail(usr.getEmail());
         loginRepository.delete(log);
+        Usuario user = userRepository.findByEmail(usr.getEmail());
+        userRepository.delete(user);
     }
 
     private Object converterDtoToEntity(LoginUserDTO dto, Class name) {
