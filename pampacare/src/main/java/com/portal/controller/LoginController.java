@@ -17,14 +17,15 @@
 // import org.springframework.web.bind.annotation.PostMapping;
 // import org.springframework.web.bind.annotation.RequestBody;
 // import org.springframework.web.bind.annotation.RequestMapping;
+// import org.springframework.web.bind.annotation.RestController;
 
 // import com.portal.configuration.JwtTokenProvider;
 // import com.portal.entity.Login;
 // import com.portal.repository.LoginRepository;
 
-// @Controller
+// @RestController
 // @RequestMapping("/auth")
-// @CrossOrigin
+// @CrossOrigin(origins="http://localhost:3000")
 // public class LoginController {
 // 	private static Logger log = LoggerFactory.getLogger(LoginController.class);
 //     @Autowired

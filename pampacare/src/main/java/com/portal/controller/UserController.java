@@ -8,17 +8,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
-import javax.validation.Valid;
 import com.portal.dto.LoginUserDTO;
 import com.portal.entity.Usuario;
 import com.portal.service.UserService;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins="http://localhost:3000")
 @RequestMapping("/portal")
 public class UserController {
 
@@ -36,7 +33,7 @@ public class UserController {
   }
   
   @PostMapping("/editar/usuario")
-  public void updateUser(Usuario user){
+  public void updateUser(@RequestBody LoginUserDTO user){
     service.updateUserInfo(user);
   }
 
