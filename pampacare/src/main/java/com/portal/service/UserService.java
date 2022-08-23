@@ -55,7 +55,7 @@ public class UserService {
             Login log = (Login) converterDtoToEntity(user, Login.class);
             Usuario usuario = (Usuario) converterDtoToEntity(user, Usuario.class);
             userRepository.save(usuario);
-            loginRepository.save(log);
+            // loginRepository.save(log);
             return new ResponseEntity<String>("Cadastro atualizado com sucesso!", HttpStatus.OK);
         }catch(Error e){
             return new ResponseEntity<String>("Erro ao realizar a atualização do cadastro", HttpStatus.BAD_REQUEST);
