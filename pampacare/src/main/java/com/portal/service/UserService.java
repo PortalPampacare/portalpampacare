@@ -33,7 +33,7 @@ public class UserService {
         try {
             Usuario usr = (Usuario) converterDtoToEntity(dto, Usuario.class);
             userRepository.save(usr);
-            loginRepository.save(createLogin(dto, usr));
+            // loginRepository.save(createLogin(dto, usr));
             return new ResponseEntity<String>("Cadastrado com sucesso!", HttpStatus.OK);
         } catch (Error e) {
             return new ResponseEntity<String>("Erro ao realizar o cadastro", HttpStatus.BAD_REQUEST);
